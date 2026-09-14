@@ -1,5 +1,6 @@
 # Todo list
 Oldest tasks will be at the bottom of the list. For instructions on what to do with the project, see below.
+- [ ] Figure out Limelight dependencies
 - [ ] Drivetrain with proper ports and functions ready to go
 - [ ] With drivetrain, make a simple program to make it so that when you run the robot, ensure all motors are at the same speed throughout program with Python data analysis and telemetry (this will be the first true run with Python that is not just dummy data)
 - [ ] Pedro pathing constants (required continuous updating of robot's mass)
