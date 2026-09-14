@@ -41,7 +41,7 @@ python -m venv .venv
 # the following command will both activate the venv and start the localhost for editing notebooks (comes from a separate ps1 file)
 .\activate.ps1
 # if you recieve any errors, hit Ctrl+C and make sure you install the following:
-pip install numpy pandas matplotlib seaborn # do this exactly
+pip install numpy pandas matplotlib seaborn # do this exactly (make sure you are in the venv)
 ```
 
 ### But why Python data analysis?
@@ -49,4 +49,5 @@ Notebook is arguably more important than competition performance itself. One of 
 
 - Normative process involves looking at something and suggesting a change based on how something may appear. For example, if one wheel appears to be slower than another, you may try to artifically increase the speed of that wheel by guessing certain values for `setPower`.
 - Positive process involves looking at a certain issue and fixing it with data. Using the example from above, if one wheel is slightly slower than others, you would use telemetry to find the ticks/sec of every single wheel and try to find any confounding variables affecting the speed of the wheel.
+
 Note that neither of these processes are inherently bad. However, notebook with FTC has a heavy focus on data analysis, therefore it is incredibly crucial to have more positive forms of the engineering process in our notebook. These notebooks will likely include various `pandas` dataframes and `matplotlib` graphs to represent these dataframes.
