@@ -4,6 +4,7 @@ Oldest tasks will be at the bottom of the list. For instructions on what to do w
 - [ ] With drivetrain, make a simple program to make it so that when you run the robot, ensure all motors are at the same speed throughout program with Python data analysis and telemetry (this will be the first true run with Python that is not just dummy data)
 - [ ] Pedro pathing constants (required continuous updating of robot's mass)
 - [ ] Complete pedro pathing tuning
+- [ ] Get basic telemetry stats ready (ex wheel powers, battery voltage)
 - [x] Pedro pathing dependencies installed
 - [x] Basic Java -> ArrayList -> CSV in `data` folder -> shown in notebook (not with telemetry just yet)
 We will go from there, these are top priority.
