@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,7 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class Drivetrain extends LinearOpMode {
 
     Hardware robot = Hardware.getInstance();
-    private Follower follower;
 
     @Override
     public void runOpMode() {
@@ -19,7 +17,6 @@ public class Drivetrain extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            follower.update();
 
             double forward = -gamepad1.left_stick_y;
             double strafe  =  gamepad1.left_stick_x * 1.1;
