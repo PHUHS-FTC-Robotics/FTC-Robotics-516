@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.Range;
 
 public class Hardware {
@@ -12,9 +13,10 @@ public class Hardware {
     public DcMotor lf; // cm1
     public DcMotor rb; // cm2
     public DcMotor lb; // cm3
+    // this will be used for any pandas dataframes
+    public VoltageSensor voltageSensor;
 
     public static double maxSpeed = 1;
-    // slightly lowered speed to prevent feeling of being overly reactive
     private static Hardware myInstance = null;
     public static Hardware getInstance(){
         if(myInstance == null) {
@@ -48,11 +50,23 @@ public class Hardware {
         lb.setDirection(DcMotorSimple.Direction.REVERSE);
         lb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lb.setPower(0);
+
+        // grabs first available voltage sensor
+        if (hwMap.voltageSensor.iterator().hasNext()) {
+            voltageSensor = hwMap.voltageSensor.iterator().next();
+        }
     }
     public void setPower(double fl, double fr, double bl, double br){
         lf.setPower(Range.clip(fl, -maxSpeed, maxSpeed));
         rf.setPower(Range.clip(fr, -maxSpeed, maxSpeed));
         lb.setPower(Range.clip(bl, -maxSpeed, maxSpeed));
         rb.setPower(Range.clip(br, -maxSpeed, maxSpeed));
+    }
+    // helper function to get battery voltage without crashing everything
+    public double getBatteryVoltage() {
+        if (voltageSensor != null) {
+            return voltageSensor.getVoltage();
+        }
+        return 0.0; // return zero if hardware link fails
     }
 }
