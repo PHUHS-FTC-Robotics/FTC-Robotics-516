@@ -2,11 +2,12 @@
 Oldest tasks will be at the bottom of the list. For instructions on what to do with the project, see below.
 - [ ] Figure out Limelight dependencies
 - [ ] Drivetrain with proper ports and functions ready to go
-- [ ] With drivetrain, make a simple program to make it so that when you run the robot, ensure all motors are at the same speed throughout program with Python data analysis and telemetry (this will be the first true run with Python that is not just dummy data)
 - [ ] Pedro pathing constants (required continuous updating of robot's mass)
-- [ ] Complete pedro pathing tuning
+- [ ] Fix telemetry data structures into a proper class
+- [ ] Add toggle with a specific button so that data exports do not always show
+- [x] Get basic telemetry stats ready (ex wheel powers, battery voltage)
 - [x] Pedro pathing dependencies installed
-- [x] Basic Java -> ArrayList -> CSV in `data` folder -> shown in notebook (not with telemetry just yet)
+- [x] Basic Java -> ArrayList -> CSV in `data` folder -> shown in notebook
 We will go from there, these are top priority.
 
 # Stuff to Know
