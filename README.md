@@ -4,6 +4,7 @@ Oldest tasks will be at the bottom of the list. For instructions on what to do w
 - [ ] Drivetrain with proper ports and functions ready to go
 - [ ] Pedro pathing constants (required continuous updating of robot's mass)
 - [ ] Fix telemetry data structures into a proper class
+- [ ] Add toggle with a specific button so that data exports do not always show
 - [x] Get basic telemetry stats ready (ex wheel powers, battery voltage)
 - [x] Pedro pathing dependencies installed
 - [x] Basic Java -> ArrayList -> CSV in `data` folder -> shown in notebook
