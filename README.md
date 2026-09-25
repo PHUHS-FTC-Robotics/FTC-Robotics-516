@@ -1,6 +1,6 @@
 # Todo list
 Oldest tasks will be at the bottom of the list. For instructions on what to do with the project, see below.
-- [ ] Complete pedro pathing tuning
+- [ ] Figure out Limelight dependencies
 - [ ] Drivetrain with proper ports and functions ready to go
 - [ ] Pedro pathing constants (required continuous updating of robot's mass)
 - [ ] Fix telemetry data structures into a proper class
@@ -45,6 +45,8 @@ python -m venv .venv
 # if you recieve any errors, hit Ctrl+C and make sure you install the following:
 pip install numpy pandas matplotlib seaborn # do this exactly (make sure you are in the venv)
 ```
+
+PLEASE triple-check that your `.gitignore` matches the one from this repo. We don't want to break the repo with bloated virtual environment files.
 
 ### But why Python data analysis?
 Notebook is arguably more important than competition performance itself. One of the most important parts of notebook is being able to test new changes with the engineering process. The goal of using Python and data science libraries like `numpy`, `pandas`, `matplotlib`, etc. is to differentiate the process of positive and normative engineering:
