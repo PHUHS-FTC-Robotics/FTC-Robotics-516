@@ -13,6 +13,8 @@ public class Hardware {
     public DcMotor lf; // cm1
     public DcMotor rb; // cm2
     public DcMotor lb; // cm3
+    public DcMotor shoot; // put wiring here
+    public DcMotor it; // put wiring here
     // this will be used for any pandas dataframes
     public VoltageSensor voltageSensor;
 
@@ -50,6 +52,18 @@ public class Hardware {
         lb.setDirection(DcMotorSimple.Direction.REVERSE);
         lb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lb.setPower(0);
+
+        shoot = hwMap.get(DcMotor.class, "cm3");
+        shoot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shoot.setDirection(DcMotorSimple.Direction.REVERSE);
+        shoot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shoot.setPower(0);
+
+        it = hwMap.get(DcMotor.class, "cm3");
+        it.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        it.setDirection(DcMotorSimple.Direction.REVERSE);
+        it.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        it.setPower(0);
 
         // grabs first available voltage sensor
         if (hwMap.voltageSensor.iterator().hasNext()) {

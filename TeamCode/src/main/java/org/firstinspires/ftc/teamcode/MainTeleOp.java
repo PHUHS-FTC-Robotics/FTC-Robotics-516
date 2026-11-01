@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "Demo Drivetrain")
-public class Drivetrain extends LinearOpMode {
+@TeleOp(name = "Main TeleOp")
+public class MainTeleOp extends LinearOpMode {
 
     Hardware robot = Hardware.getInstance();
 
@@ -49,6 +49,8 @@ public class Drivetrain extends LinearOpMode {
             double currentLf = robot.lf.getPower();
             double currentRb = robot.rb.getPower();
             double currentLb = robot.lb.getPower();
+            double currentShoot = robot.shoot.getPower();
+            double currentIt = robot.it.getPower();
             double currentVoltage = robot.getBatteryVoltage();
             // Record telemetry sample
             if (sampleTimer.milliseconds() >= MS_TRANSMISSION_INTERVAL) {
@@ -58,6 +60,8 @@ public class Drivetrain extends LinearOpMode {
                         currentLf,
                         currentRb,
                         currentLb,
+                        currentShoot,
+                        currentIt,
                         currentVoltage
                 );
                 sampleTimer.reset();
@@ -78,6 +82,14 @@ public class Drivetrain extends LinearOpMode {
             telemetry.addData(
                     "Left back",
                     currentLb
+            );
+            telemetry.addData(
+                    "Shooter motor",
+                    currentShoot
+            );
+            telemetry.addData(
+                    "Intake motor",
+                    currentIt
             );
             telemetry.addData(
                     "Battery Voltage",
