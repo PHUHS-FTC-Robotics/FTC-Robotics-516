@@ -42,8 +42,10 @@ public class MainTeleOp extends LinearOpMode {
             double forward = -gamepad1.left_stick_y;
             double strafe = gamepad1.left_stick_x * 1.1;
             double turn = gamepad1.right_stick_x;
-            // Drive robot
+            // methods for robot
             drive(strafe, forward, turn);
+            handleIntake();
+            handleShooter(gamepad1.y);
             // Get current robot data
             double currentRf = robot.rf.getPower();
             double currentLf = robot.lf.getPower();
@@ -105,7 +107,7 @@ public class MainTeleOp extends LinearOpMode {
         // Export data when OpMode ends
         telemetryData.exportToCsv();
     }
-
+    // drive method
     private void drive(double x, double y, double turn) {
         double denominator = Math.max(
                 Math.abs(y) + Math.abs(x) + Math.abs(turn),
@@ -117,5 +119,21 @@ public class MainTeleOp extends LinearOpMode {
                 (y - x + turn) / denominator,
                 (y + x - turn) / denominator
         );
+    }
+    // intake method
+    private void handleIntake() {
+        if (gamepad1.left_bumper) {
+            robot.it.setPower(-1);
+        } else if (gamepad1.right_bumper) {
+            robot.it.setPower(1);
+        } else if (gamepad1.dpad_up){
+            robot.it.setPower(1);
+        } else if (gamepad1.dpad_down) {
+            robot.it.setPower(0);
+        }
+    }
+    // shooting method
+    private void handleShooter(boolean shooting){
+        robot.shoot.setPower(shooting ? 1.0 : 0.0);
     }
 }
