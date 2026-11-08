@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -13,8 +14,9 @@ public class Hardware {
     public DcMotor lf; // cm1
     public DcMotor rb; // cm2
     public DcMotor lb; // cm3
-    public DcMotor shoot; // em0
-    public DcMotor it; // em1
+    public DcMotorEx shoot; // em0
+    public DcMotorEx stopper; // em1
+    public DcMotor it; // em2
     // this will be used for any pandas dataframes
     public VoltageSensor voltageSensor;
 
@@ -52,11 +54,17 @@ public class Hardware {
         lb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lb.setPower(0);
 
-        shoot = hwMap.get(DcMotor.class, "shoot");
+        shoot = hwMap.get(DcMotorEx.class, "shoot");
         shoot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shoot.setDirection(DcMotorSimple.Direction.REVERSE);
-        shoot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shoot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shoot.setPower(0);
+
+        stopper = hwMap.get(DcMotorEx.class, "stopper");
+        stopper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        stopper.setDirection(DcMotorSimple.Direction.REVERSE);
+        stopper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        stopper.setPower(0);
 
         it = hwMap.get(DcMotor.class, "it");
         it.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

@@ -11,6 +11,12 @@ public class MainTeleOp extends LinearOpMode {
 
     // Telemetry sampling interval
     int MS_TRANSMISSION_INTERVAL = 100;
+    // other constants for shooting and intake
+    private static final double TARGET_VELOCITY = 250;
+    private static final double READY_THRESHOLD = 0.90;
+    private static final long READY_TIME_MS = 75;
+    private long readyStartTime = 0;
+    private boolean flywheelReady = false;
 
     // Telemetry data manager
     private TelemetryData telemetryData = new TelemetryData();
@@ -21,19 +27,16 @@ public class MainTeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-
         robot.init(hardwareMap);
-
         telemetry.setMsTransmissionInterval(
                 MS_TRANSMISSION_INTERVAL
         );
-
         telemetry.addLine("Ready...");
         telemetry.update();
 
         waitForStart();
 
-        // Start timers when PLAY is pressed
+        // Start timers when play is pressed
         matchTimer.reset();
         sampleTimer.reset();
 
@@ -52,6 +55,7 @@ public class MainTeleOp extends LinearOpMode {
             double currentRb = robot.rb.getPower();
             double currentLb = robot.lb.getPower();
             double currentShoot = robot.shoot.getPower();
+            double currentStopper = robot.stopper.getPower();
             double currentIt = robot.it.getPower();
             double currentVoltage = robot.getBatteryVoltage();
             // Record telemetry sample
@@ -63,6 +67,7 @@ public class MainTeleOp extends LinearOpMode {
                         currentRb,
                         currentLb,
                         currentShoot,
+                        currentStopper,
                         currentIt,
                         currentVoltage
                 );
@@ -88,6 +93,10 @@ public class MainTeleOp extends LinearOpMode {
             telemetry.addData(
                     "Shooter motor",
                     currentShoot
+            );
+            telemetry.addData(
+                    "Stopper motor",
+                    currentStopper
             );
             telemetry.addData(
                     "Intake motor",
@@ -124,16 +133,51 @@ public class MainTeleOp extends LinearOpMode {
     private void handleIntake() {
         if (gamepad1.left_bumper) {
             robot.it.setPower(-1);
+            robot.stopper.setPower(1);
         } else if (gamepad1.right_bumper) {
             robot.it.setPower(1);
+        } // emergency buttons if top statements do not work
+        else if (gamepad1.dpad_down) {
+            robot.stopper.setPower(1);
         } else if (gamepad1.dpad_up){
-            robot.it.setPower(1);
-        } else if (gamepad1.dpad_down) {
-            robot.it.setPower(0);
+            robot.stopper.setPower(-1);
         }
     }
     // shooting method
-    private void handleShooter(boolean shooting){
-        robot.shoot.setPower(shooting ? 1.0 : 0.0);
+    private void handleShooter(boolean shooting) {
+        boolean intakeActive = gamepad1.left_bumper || gamepad1.right_bumper || gamepad1.dpad_up || gamepad1.dpad_down;
+
+        if (!shooting) {
+            robot.shoot.setVelocity(0);
+            if (!intakeActive) {
+                robot.it.setPower(0);
+                robot.stopper.setPower(0);
+            }
+            readyStartTime = 0;
+            flywheelReady = false;
+            return;
+        }
+        robot.shoot.setVelocity(TARGET_VELOCITY);
+        boolean atSpeed = Math.abs(robot.shoot.getVelocity()) > TARGET_VELOCITY * READY_THRESHOLD;
+        if (!flywheelReady) {
+            if (atSpeed) {
+                if (readyStartTime == 0) readyStartTime = System.currentTimeMillis();
+                if (System.currentTimeMillis() - readyStartTime > READY_TIME_MS) {
+                    flywheelReady = true;
+                }
+            } else {
+                readyStartTime = 0;
+            }
+        }
+
+        if (!intakeActive) { // only control intake motor if driver isn't using it
+            if (flywheelReady) {
+                robot.it.setPower(1);
+                robot.stopper.setPower(-1);
+            } else {
+                robot.it.setPower(0);
+                robot.stopper.setPower(0);
+            }
+        }
     }
 }
