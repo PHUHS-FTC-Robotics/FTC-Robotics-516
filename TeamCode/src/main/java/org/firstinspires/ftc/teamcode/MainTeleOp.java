@@ -12,9 +12,10 @@ public class MainTeleOp extends LinearOpMode {
     // Telemetry sampling interval
     int MS_TRANSMISSION_INTERVAL = 100;
     // other constants for shooting and intake
-    private static final double TARGET_VELOCITY = 250;
-    private static final double READY_THRESHOLD = 0.90;
-    private static final long READY_TIME_MS = 75;
+    private static final double TARGET_VELOCITY = 1750;
+    private static final double STOPPER_VELOCITY = 550;
+    private static final double READY_THRESHOLD = 0.95;
+    private static final long READY_TIME_MS = 100;
     private long readyStartTime = 0;
     private boolean flywheelReady = false;
 
@@ -54,8 +55,10 @@ public class MainTeleOp extends LinearOpMode {
             double currentLf = robot.lf.getPower();
             double currentRb = robot.rb.getPower();
             double currentLb = robot.lb.getPower();
-            double currentShoot = robot.shoot.getPower();
-            double currentStopper = robot.stopper.getPower();
+            // the following will be in velocity due to being DcMotorEx
+            double currentShoot = robot.shoot.getVelocity();
+            double currentStopper = robot.stopper.getVelocity();
+            // use simple setPower for intake motor, no need for encoders
             double currentIt = robot.it.getPower();
             double currentVoltage = robot.getBatteryVoltage();
             // Record telemetry sample
@@ -135,9 +138,10 @@ public class MainTeleOp extends LinearOpMode {
             robot.it.setPower(-1);
             robot.stopper.setPower(1);
         } else if (gamepad1.right_bumper) {
-            robot.it.setPower(1);
+            robot.it.setPower(0.8);
         } // emergency buttons if top statements do not work
         else if (gamepad1.dpad_down) {
+            robot.stopper.setPower(1);
             robot.stopper.setPower(1);
         } else if (gamepad1.dpad_up){
             robot.stopper.setPower(-1);
@@ -172,11 +176,11 @@ public class MainTeleOp extends LinearOpMode {
 
         if (!intakeActive) { // only control intake motor if driver isn't using it
             if (flywheelReady) {
-                robot.it.setPower(1);
-                robot.stopper.setPower(-1);
+                robot.it.setPower(0.5);
+                robot.stopper.setVelocity(-STOPPER_VELOCITY);
             } else {
                 robot.it.setPower(0);
-                robot.stopper.setPower(0);
+                robot.stopper.setVelocity(0);
             }
         }
     }
