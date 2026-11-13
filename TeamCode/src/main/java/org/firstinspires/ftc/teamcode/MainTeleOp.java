@@ -12,10 +12,11 @@ public class MainTeleOp extends LinearOpMode {
     // Telemetry sampling interval
     int MS_TRANSMISSION_INTERVAL = 100;
     // other constants for shooting and intake
-    private static final double TARGET_VELOCITY = 1750;
-    private static final double STOPPER_VELOCITY = 550;
+    // currently even numbered balls shoot consistently only, continue tuning
+    private static final double TARGET_VELOCITY = 1850;
+    private static final double STOPPER_VELOCITY = 400;
     private static final double READY_THRESHOLD = 0.95;
-    private static final long READY_TIME_MS = 100;
+    private static final long READY_TIME_MS = 150;
     private long readyStartTime = 0;
     private boolean flywheelReady = false;
 
