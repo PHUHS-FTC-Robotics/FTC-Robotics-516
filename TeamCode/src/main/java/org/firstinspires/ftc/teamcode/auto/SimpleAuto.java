@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
-@Autonomous(name = "Left (Blue) Goal Auto")
-public class BlueAuto extends OpMode {
+@Autonomous(name = "Simple Auto (Any Color)")
+public class SimpleAuto extends OpMode {
 
     private final Hardware robot = Hardware.getInstance();
 

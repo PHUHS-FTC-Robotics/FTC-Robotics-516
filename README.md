@@ -1,5 +1,6 @@
 # Todo list
 Oldest tasks will be at the bottom of the list. For instructions on what to do with the project, see below.
+- [ ] Pull all telemetry from each match and analyze what can be improved (regression, shooter, etc.)
 - [ ] Figure out Limelight dependencies
 - [x] Drivetrain with proper ports and functions ready to go
 - [x] Pedro pathing constants for Pedro Pathing 3
