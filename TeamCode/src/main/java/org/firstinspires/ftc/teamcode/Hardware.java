@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.Range;
 
 public class Hardware {
 
-    // the following hardware is meant for Mr. Olson's demo robot
+    // this is hardware updated with driver hub
     public DcMotor rf; // cm0
     public DcMotor lf; // cm1
     public DcMotor rb; // cm2

@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
-@Autonomous(name = "Blue Goal Auto")
-public class BlueGoalAuto extends OpMode {
+@Autonomous(name = "Left (Blue) Goal Auto")
+public class BlueAuto extends OpMode {
 
     private final Hardware robot = Hardware.getInstance();
 
@@ -28,10 +28,10 @@ public class BlueGoalAuto extends OpMode {
     // poses
     private final PoseFactory p = PoseFactory.degrees();
 
-    private final Pose startPose = p.of(85, 8,   90);
-    private final Pose shootPose = p.of(85,   15,  90); // aim the shooter at the goal
-    private final Pose rowPose   = p.of(124,   55,  90);
-    private final Pose endPose   = p.of(132,   100, 90);
+    private final Pose startPose = p.of(55.7, 8,   90);
+    private final Pose shootPose = p.of(57,   15,  90);   // aim the shooter at the goal
+    private final Pose rowPose   = p.of(17,   55,  90);
+    private final Pose endPose   = p.of(10,   100, 90);
 
     private Follower follower;
     private final ElapsedTime stateTimer = new ElapsedTime();

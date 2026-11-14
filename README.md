@@ -2,8 +2,8 @@
 Oldest tasks will be at the bottom of the list. For instructions on what to do with the project, see below.
 - [ ] Figure out Limelight dependencies
 - [x] Drivetrain with proper ports and functions ready to go
-- [ ] Pedro pathing constants (required continuous updating of robot's mass)
-- [ ] Get sloth for faster code upload
+- [x] Pedro pathing constants for Pedro Pathing 3
+- [x] Get sloth for faster code upload
 - [x] Fix telemetry data structures into a proper class
 - [x] Get basic telemetry stats ready (ex wheel powers, battery voltage)
 - [x] Pedro pathing dependencies installed
