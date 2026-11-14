@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -8,11 +9,14 @@ import com.qualcomm.robotcore.util.Range;
 
 public class Hardware {
 
-    // the following hardware is meant for Mr. Olson's demo robot
+    // this is hardware updated with driver hub
     public DcMotor rf; // cm0
     public DcMotor lf; // cm1
     public DcMotor rb; // cm2
     public DcMotor lb; // cm3
+    public DcMotorEx shoot; // em0
+    public DcMotorEx stopper; // em1
+    public DcMotor it; // em2
     // this will be used for any pandas dataframes
     public VoltageSensor voltageSensor;
 
@@ -27,29 +31,46 @@ public class Hardware {
     public void init(HardwareMap hwMap){
 
         // motors for wheels
-        // in this order, left front, right front, right back, left back
 
-        lf = hwMap.get(DcMotor.class, "cm1");
+        rf = hwMap.get(DcMotor.class, "rf");
+        rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rf.setPower(0);
+
+        lf = hwMap.get(DcMotor.class, "lf");
         lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lf.setDirection(DcMotorSimple.Direction.REVERSE);
         lf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lf.setPower(0);
 
-        rf = hwMap.get(DcMotor.class, "cm0");
-        rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rf.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rf.setPower(0);
-
-        rb = hwMap.get(DcMotor.class, "cm2");
+        rb = hwMap.get(DcMotor.class, "rb");
         rb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rb.setPower(0);
 
-        lb = hwMap.get(DcMotor.class, "cm3");
+        lb = hwMap.get(DcMotor.class, "lb");
         lb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lb.setDirection(DcMotorSimple.Direction.REVERSE);
         lb.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lb.setPower(0);
+
+        shoot = hwMap.get(DcMotorEx.class, "shoot");
+        shoot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shoot.setDirection(DcMotorSimple.Direction.REVERSE);
+        shoot.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shoot.setPower(0);
+
+        stopper = hwMap.get(DcMotorEx.class, "stopper");
+        stopper.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        stopper.setDirection(DcMotorSimple.Direction.REVERSE);
+        stopper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        stopper.setPower(0);
+
+        it = hwMap.get(DcMotor.class, "it");
+        it.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        it.setDirection(DcMotorSimple.Direction.REVERSE);
+        it.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        it.setPower(0);
 
         // grabs first available voltage sensor
         if (hwMap.voltageSensor.iterator().hasNext()) {

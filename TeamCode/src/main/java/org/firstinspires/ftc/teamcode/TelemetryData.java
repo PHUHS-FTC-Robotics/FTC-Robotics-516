@@ -16,6 +16,9 @@ public class TelemetryData {
     private ArrayList<Double> lfPowerLog = new ArrayList<>();
     private ArrayList<Double> rbPowerLog = new ArrayList<>();
     private ArrayList<Double> lbPowerLog = new ArrayList<>();
+    private ArrayList<Double> shootPowerLog = new ArrayList<>();
+    private ArrayList<Double> stopperPowerLog = new ArrayList<>();
+    private ArrayList<Double> itPowerLog = new ArrayList<>();
     private ArrayList<Double> batteryLog = new ArrayList<>();
 
     // Add one telemetry sample
@@ -25,6 +28,9 @@ public class TelemetryData {
             double lfPower,
             double rbPower,
             double lbPower,
+            double shootPower,
+            double stopperPower,
+            double itPower,
             double batteryVoltage
     ) {
         timeLog.add(time);
@@ -32,6 +38,9 @@ public class TelemetryData {
         lfPowerLog.add(lfPower);
         rbPowerLog.add(rbPower);
         lbPowerLog.add(lbPower);
+        shootPowerLog.add(shootPower);
+        stopperPowerLog.add(stopperPower);
+        itPowerLog.add(itPower);
         batteryLog.add(batteryVoltage);
     }
 
@@ -64,7 +73,7 @@ public class TelemetryData {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
 
             writer.println(
-                    "time_seconds,rf_power,lf_power,rb_power,lb_power,battery_voltage"
+                    "time_seconds,rf_power,lf_power,rb_power,lb_power,shoot_power,stopper_power,it_power,battery_voltage"
             );
 
             for (int i = 0; i < timeLog.size(); i++) {
@@ -75,6 +84,9 @@ public class TelemetryData {
                                 lfPowerLog.get(i) + "," +
                                 rbPowerLog.get(i) + "," +
                                 lbPowerLog.get(i) + "," +
+                                shootPowerLog.get(i) + "," +
+                                stopperPowerLog.get(i) + "," +
+                                itPowerLog.get(i) + "," +
                                 batteryLog.get(i)
                 );
             }
