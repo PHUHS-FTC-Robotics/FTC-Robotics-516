@@ -53,7 +53,7 @@ public class TelemetryData {
     public void exportToCsv() {
 
         File directory = new File("/sdcard/FIRST/data");
-        String dataPurpose = "drivetrain_telemetry_";
+        String dataPurpose = "telemetry_";
 
         if (!directory.exists()) {
             directory.mkdirs();
