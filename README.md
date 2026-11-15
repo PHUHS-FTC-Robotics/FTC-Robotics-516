@@ -1,58 +1,188 @@
-# Todo list
-Oldest tasks will be at the bottom of the list. For instructions on what to do with the project, see below.
-- [ ] Pull all telemetry from each match and analyze what can be improved (regression, shooter, etc.)
+
+# FTC Robotics 516
+
+## Todo list
+
+- [ ] Refactor telemetry collection into a reusable `DataLogger` class
+- [ ] Separate continuous telemetry data from individual shot-event data
+- [ ] Add timestamps, run IDs, and shot IDs to the data structures
+- [ ] Make sure telemetry column names accurately represent what is being measured
+- [ ] Build a basic pandas workflow to validate and clean collected data
+- [ ] Set up the notebook structure for data analysis and documentation
+- [ ] Pull telemetry from each match and analyze what can be improved (drivetrain, shooter, battery voltage, etc.)
 - [ ] Figure out Limelight dependencies
-- [x] Drivetrain with proper ports and functions ready to go
-- [x] Pedro pathing constants for Pedro Pathing 3
+
+### After the new robot design is finalized
+
+- [ ] Update hardware configuration and software architecture to account for mechanical changes
+- [ ] Implement and test the new subsystems
+- [ ] Implement shot-event recording through TeleOp
+- [ ] Make sure individual shots can be connected to their corresponding telemetry measurements
+- [ ] Verify that all data is being recorded correctly before beginning experiments
+
+### After the robot is built
+
+- [ ] Collect controlled shooter experiment data
+- [ ] Record relevant variables for each shot (distance, target velocity, actual velocity, battery voltage, outcome, etc.)
+- [ ] Collect enough observations to investigate relationships between variables
+- [ ] Develop a regression model to investigate shooter performance
+- [ ] Validate the model using separate testing sessions
+- [ ] Use the results to inform shooter settings and potential mechanical/programming improvements
+
+### Completed
+
+- [x] Drivetrain with proper ports/functions
+- [x] Pedro Pathing constants for PP3
 - [x] Get sloth for faster code upload
-- [x] Fix telemetry data structures into a proper class
-- [x] Get basic telemetry stats ready (ex wheel powers, battery voltage)
-- [x] Pedro pathing dependencies installed
+- [x] Fix telemetry data structures into proper class
+- [x] Get basic telemetry stats ready (wheel powers, battery voltage)
+- [x] Pedro Pathing dependencies installed
 - [x] Basic Java -> ArrayList -> CSV in `data` folder -> shown in notebook
-We will go from there, these are top priority.
 
-# Stuff to Know
-Understand that this `README.md` file is specifically meant for this repository. The original repo for this fork has a different `README.md` that is more generalized for FTC Robotics [(see here)](https://github.com/FIRST-Tech-Challenge/FtcRobotController) and setting up the project. This `README.md` for this repo is meant to be a simple place to find information on how stuff works (especially with the data science implementations with Python) and how adding to this repo should happen.
+**Note:** We can test the data logger with the current robot, but we should wait until the new robot is built and its measurements are finalized before collecting data for the actual regression experiments.
 
-## Adding to the repo
-In order to contribute to this repo, make sure to always create a separate branch. Make sure the branch name is somewhat descriptive and is not just your name. NEVER push bad code to the `main` branch for whatever reason (you should not be able to anyways). When you think your code is ready, make a PR and it will be reviewed. So the process would be:
-1. Make a new feature on a separate branch with a descriptive name
-2. Push often to that branch so changes to code are easy to track
-3. Test your changes. Make sure nothing crashes, and everything works as intended with your code
-4. Once ready, make a PR with a detailed description of what is added
-5. The PR will be tested and will eventually me merged to `main` if everything works
+---
+
+## What is this repository?
+
+This repository contains the code and data analysis tools for FTC Robotics 516. It is separate from the upstream FTC SDK repository and serves as a place to organize our robot code, telemetry, and machine learning experiments.
+
+## How to contribute
+
+1. Create a new branch for your feature or changes.
+2. Make your changes and test them.
+3. Push your branch frequently so changes are backed up.
+4. Open a pull request when your changes are ready.
+5. Review the changes before merging into `main`.
+
+Try to keep features separated into their own files/classes instead of putting everything into one large OpMode.
 
 ## How the code works
-This project is not necessarily a typical FTC Robotics repo. There will be various separate folders at the project root with the purpose of collecting telemetry data for data science analysis with Python libraries. So the project structure will be a bit different: 
 
-- all TeleOp, Auto, and Pedro Pathing code will live inside `TeamCode/src/main/java/org/firstinspires/ftc/teamcode`
-- for these programs, they may be separated into different folders for organizational purposes
-- we do have test programs for python data analysis right now, however they are in beginner stages (look below for exact file structures)
-- in the future, we will take take certain data from telemetry at certain time intervals (like every 0.5 seconds) either in testing or matches, and use that data to continually improve our robot and its programming. Code will live in separate folders:
-	- there will be a `notebooks` folder in the project root with all notebooks for testing specific things
-   	- there will be a `data` folder where ArrayLists from telemetry will be converted into CSV files, so that Python can read the data
-   	- you should a Python virtual environment folder called `.venv`, see below for specific instructions:
+The main FTC code is located in:
 
-### Dependencies
-Because this project involves Python, there will be a few required dependencies. Before doing any of the following installations, make sure:
-1. You have Python and pip installed locally on your computer
-2. Your Gradle build runs properly
-3. You should have git installed already if you cloned this project, but still ensure you have it locally
-Now, you will be creating a Python virtual environment. Follow these instructions and put these commands in the terminal:
-```powershell
-python -m venv .venv
-# the following command will both activate the venv and start the localhost for editing notebooks (comes from a separate ps1 file)
-.\activate.ps1
-# if you recieve any errors, hit Ctrl+C and make sure you install the following:
-pip install numpy pandas matplotlib seaborn # do this exactly (make sure you are in the venv)
+`TeamCode/src/main/java/org/firstinspires/ftc/teamcode`
+
+The project is organized into separate packages for hardware, subsystems, OpModes, and telemetry. This keeps hardware configuration and individual subsystem logic separate from the main TeleOp and autonomous routines.
+
+The data analysis side is organized separately:
+
+- `notebooks/` contains Jupyter notebooks for data cleaning, visualization, statistical analysis, and modeling.
+- `data/` contains exported CSV telemetry and experiment data.
+- `.venv/` contains the local Python virtual environment.
+
+### Data collection
+
+There are two main types of data we want to collect:
+
+**1. Continuous telemetry**
+
+This is sampled at regular intervals (currently around every 100 ms). It records how the robot is operating over time.
+
+Examples:
+- Drivetrain motor velocities/powers
+- Shooter velocity
+- Shooter target velocity
+- Intake power
+- Battery voltage
+- Subsystem states
+
+**2. Shot-event data**
+
+This is recorded once for each individual shot, rather than at a fixed time interval.
+
+Examples:
+- Shot ID and timestamp
+- Shooting distance
+- Target shooter velocity
+- Actual shooter velocity
+- Battery voltage
+- Velocity stability before the shot
+- Ball type
+- Whether the shot scored or missed
+- Landing error, if it can be measured consistently
+
+These two datasets can be connected using timestamps and shot IDs. This lets us investigate what the robot was doing immediately before and during a particular shot.
+
+The Java code handles collecting and exporting the data. Python handles cleaning, visualization, statistical analysis, and modeling.
+
+## Python environment
+
+The project uses a local Python virtual environment. Activate it before running notebooks.
+
+Install the required packages with:
+
+```bash
+pip install numpy pandas matplotlib seaborn
 ```
 
-PLEASE triple-check that your `.gitignore` matches the one from this repo. We don't want to break the repo with bloated virtual environment files.
+Additional libraries can be added as the project develops.
 
-### But why Python data analysis?
-Notebook is arguably more important than competition performance itself. One of the most important parts of notebook is being able to test new changes with the engineering process. The goal of using Python and data science libraries like `numpy`, `pandas`, `matplotlib`, etc. is to differentiate the process of positive and normative engineering:
+---
 
-- Normative process involves looking at something and suggesting a change based on how something may appear. For example, if one wheel appears to be slower than another, you may try to artifically increase the speed of that wheel by guessing certain values for `setPower`.
-- Positive process involves looking at a certain issue and fixing it with data. Using the example from above, if one wheel is slightly slower than others, you would use telemetry to find the ticks/sec of every single wheel and try to find any confounding variables affecting the speed of the wheel.
+## But why Python data analysis?
 
-Note that neither of these processes are inherently bad. However, notebook with FTC has a heavy focus on data analysis, therefore it is incredibly crucial to have more positive forms of the engineering process in our notebook. These notebooks will likely include various `pandas` dataframes and `matplotlib` graphs to represent these dataframes.
+There is a difference between making an engineering decision based on intuition and making one based on measured evidence.
+
+For example, imagine that our shooter appears inconsistent during a match.
+
+An intuition-based approach might be:
+
+> The shooter seems slow, so let's increase its power.
+
+That might work, but we don't actually know whether shooter velocity is the problem. Maybe battery voltage is dropping, the ball feeder is inconsistent, or the shooter hasn't reached its target velocity before a shot.
+
+A data-driven approach would be to collect telemetry and investigate the problem.
+
+We could compare actual shooter velocity, target velocity, battery voltage, and shot outcomes to see which variables are associated with successful shots.
+
+This doesn't automatically tell us what causes a problem. However, it gives us evidence to develop better hypotheses and test potential solutions.
+
+The goal isn't to replace engineering intuition. It's to use data to make that intuition more informed.
+
+## Why use regression and data modeling?
+
+Once we have collected enough reliable data, we can investigate whether certain variables help explain or predict shooter performance.
+
+For example, we could investigate the relationship between:
+
+- Shooting distance
+- Target shooter velocity
+- Actual shooter velocity
+- Battery voltage
+- Shooter velocity stability
+- Ball type
+- Turret or launch angle, depending on the final design
+
+Depending on what we measure, we could use different types of regression.
+
+**Logistic regression** could estimate the probability of a shot scoring based on the measured variables. The outcome would be binary: scored or missed.
+
+**Linear regression** could be used if we can consistently measure something continuous, such as the landing error of a shot.
+
+We can also investigate whether relationships are nonlinear or whether multiple variables interact with one another.
+
+Of course, a model is only useful if it generalizes to new data. We will need to evaluate it using observations that were not used to train it, ideally from separate testing sessions.
+
+The point isn't to build a complicated model just for the sake of using machine learning. It's to determine whether modeling actually helps us understand or improve the robot.
+
+## What makes this project unique?
+
+The interesting part is connecting actual robotics engineering with statistical learning.
+
+Rather than working with a dataset someone else created, we are collecting measurements from a physical robot, investigating its performance, and using those results to inform future design decisions.
+
+The general process is:
+
+1. Identify a problem with the robot.
+2. Develop a hypothesis about what might be causing it.
+3. Determine what variables we need to measure.
+4. Collect and analyze the data.
+5. Build a statistical model if it is appropriate.
+6. Validate the model using unseen data.
+7. Use the results to inform a mechanical or programming change.
+8. Test the change against the original performance.
+
+This creates a feedback loop between mechanical engineering, programming, and data science.
+
+The model doesn't make engineering decisions for us. It gives us another way to understand the robot and evaluate whether our changes actually improve its performance.
